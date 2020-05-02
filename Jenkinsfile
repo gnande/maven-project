@@ -5,7 +5,7 @@ pipeline
   {
     stage ('Please print validate')
     {
-      step
+      steps
       {
         sh 'echo Hello World'
       }
