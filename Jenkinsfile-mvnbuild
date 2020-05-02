@@ -1,0 +1,26 @@
+pipeline
+{
+  agent any
+  stages
+  {
+    stage ('download the code from scm')
+    {
+      steps
+          {
+            echo 'download code from scm..kya baat hai !'
+            git 'https://github.com/gnande/maven-project.git'
+          }
+    }
+    stage ('Please build my project')
+    {
+       steps
+            {
+              echo 'build the project...Yoo!!'              
+              withMaven(jdk: 'localjdk', maven: 'localmaven') 
+              {
+                sh 'mvn install' 
+              }
+            }
+    }
+  }
+}
