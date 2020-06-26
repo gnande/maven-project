@@ -7,7 +7,7 @@ pipeline
 	  {
 			steps
 			{
-				git 'https://github.com/gnande/maven-project.git'
+				git branch: 'gnande-docker-branch', url: 'https://github.com/gnande/maven-project.git'
 			}
 	  
 	  }
