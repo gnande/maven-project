@@ -1,8 +1,6 @@
 node
 {
-	agent any
-	stages
-	{
+ // This is scripted pipeline. This has "node" at starting. Where as Declarative "Pipeline" has Pipeline at starting.
 	  stage ('checkout git master branch.')
 	  {
 			steps
@@ -74,5 +72,5 @@ node
 			}
 		}	  
 	  }
-	}
+	
 }
