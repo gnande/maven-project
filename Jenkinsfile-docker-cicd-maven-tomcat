@@ -49,13 +49,12 @@ pipeline
 	  {
 		steps
 		{
-			def sshCmd = 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32'
-			def RemoveContainer = 'docker rm -rf my-tomcat-app'
+			def sshCmd = "ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32"
+			def RemoveContainer = "Docker rm -rf my-tomcat-app"
 			sshagent(['deploy-to-devenv-docker'])
 			{
-				try{
-				
-					sh '${sshCmd} ${RemoveContainer}'
+				try{				
+					sh "${sshCmd} ${RemoveContainer}"  /* here we are using double quotes "" because double quotes gives result of varable like ${sshCmd} */
 						
 					}catch(error){
 					
@@ -68,10 +67,10 @@ pipeline
 	  {
 		steps
 		{
-			def dockerrun = 'docker run -d -p 15000:8080 --name my-tomcat-app gnande/myapp-javamvn:1.0.0'
+			def dockerrun = "docker run -d -p 15000:8080 --name my-tomcat-app gnande/myapp-javamvn:1.0.0"
 			sshagent(['deploy-to-devenv-docker'])
 			{
-				sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32 ${dockerrun}'
+				sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32 ${dockerrun}"
 			}
 		}	  
 	  }
