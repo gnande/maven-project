@@ -24,7 +24,7 @@ pipeline
 			}
 	  }
 	  
-	  stage ('Build docker image by using artifacts created by maven. Basically, It reads Dockerfile from your downloaded GIT repo and builds image.')
+	  stage ('Basically, It reads Dockerfile from your downloaded GIT repo and builds image.')
 	  {
 			steps
 			{
