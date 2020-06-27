@@ -1,52 +1,51 @@
 node
 {
  // This is scripted pipeline. This has "node" at starting. Where as Declarative "Pipeline" has Pipeline at starting.
+ // Scripted pipeline i.e. node. it does Not have agent, stages, steps. You can write def, if block, for loop in this pipeline directly.
+ // Declarative "Pipeline" has Pipeline at starting and if you want to write if block, for loop etc. then you have to write "Script" block and
+ // inside scipt block you can write for loop etc.
+ 
 	  stage ('checkout git master branch.')
 	  {
-			steps
-			{
+			
 				git branch: 'gnande-docker-branch', url: 'https://github.com/gnande/maven-project.git'
-			}
+			
 	  
 	  }
 	  
 	  stage ('Build java project by maven')
 	  {
-		steps
-			{
+		
 		
 			  withMaven(jdk: 'localjdk', maven: 'localmaven') 
 				{
 					sh 'mvn clean package'
 				}
-			}
+			
 	  }
 	  
 	  stage ('Basically, It reads Dockerfile from your downloaded GIT repo and builds image.')
 	  {
-			steps
-			{
+			
 				sh 'docker build -t gnande/myapp-javamvn:1.0.0 .'   /* myapp-javamvn:1.0.0 = image name */
-			}
+			
 	  }
 	  
 	  
 	  stage ('Login to DockerHub account and Push image.')
 	  {	    
-		steps
-		{
+		
 			withCredentials([usernameColonPassword(credentialsId: 'dockerhubaccount', variable: 'dockerhubaccount')])
 			{
 				sh "docker login -u gnande -p ${dockerhubaccount}" 
 			}	
 			sh 'docker push gnande/myapp-javamvn:1.0.0'
-		}
+		
 	  }
 	  
 	  stage ('Remove old Container if exist with same name.')
 	  {
-		steps
-		{
+		
 			def sshCmd = 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32'
 			def RemoveContainer = 'Docker rm -rf my-tomcat-app'
 			sshagent(['deploy-to-devenv-docker'])
@@ -57,20 +56,16 @@ node
 					}catch(error){
 					
 					}				
-			}
-		}
+			}		
 	  }	  
 	  
 	  stage ('Create container on Dev Environment using DockerHub account image.')
-	  {
-		steps
-		{
+	  {		
 			def dockerrun = 'docker run -d -p 15000:8080 --name my-tomcat-app gnande/myapp-javamvn:1.0.0'
 			sshagent(['deploy-to-devenv-docker'])
 			{
 				sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32 ${dockerrun}"
-			}
-		}	  
+			}			  
 	  }
 	
 }
