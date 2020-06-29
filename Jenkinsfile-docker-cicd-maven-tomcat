@@ -63,8 +63,23 @@ node
 			def dockerrun = 'docker run -d -p 15000:8080 --name my-tomcat-app gnande/myapp-javamvn:1.0.0'
 			sshagent(['deploy-to-devenv-docker'])
 			{
-				sh 'sudo chmod 777 /var/run/docker.sock'
+				//sh 'sudo chmod 777 /var/run/docker.sock'  // Do not give this command in Jenkinsfile otherwise it will give below error :-)
 				sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32 ${dockerrun}"
+				
+				/*Below is the error : 
+				
+					+ sudo chmod 777 /var/run/docker.sock
+	
+					We trust you have received the usual lecture from the local System
+					Administrator. It usually boils down to these three things:
+					
+						#1) Respect the privacy of others.
+						#2) Think before you type.
+						#3) With great power comes great responsibility.
+					
+					sudo: no tty present and no askpass program specified
+				
+				*/
 			}			  
 	  }
 	
