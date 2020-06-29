@@ -29,12 +29,11 @@ node
 			
 				sh 'docker build -t gnande/myapp-javamvn:1.0.0 .'   /* gnande/myapp-javamvn:1.0.0 = image name in local */
 			
-	  }
-	  
-	  
-	  stage ('Login to DockerHub account and Push image.')
-	  {	    
-					
+	  }	  
+
+	/* "dockerhubaccount" account created on Jenkins server at path  Jenkins > Credentials > System > Global Credentials>  (Scope=Global) and create user id & pwd and save.*/
+	  stage ('Login to DockerHub account and Push image.') 
+	  {	    			
 			withCredentials([usernamePassword(credentialsId: 'dockerhubaccount', passwordVariable: 'dockerhubpwd', usernameVariable: 'dockerhubuserid')]) 
 			{
 				sh "docker login -u gnande -p ${dockerhubpwd}"
@@ -64,6 +63,7 @@ node
 			def dockerrun = 'docker run -d -p 15000:8080 --name my-tomcat-app gnande/myapp-javamvn:1.0.0'
 			sshagent(['deploy-to-devenv-docker'])
 			{
+				sh 'sudo chmod 777 /var/run/docker.sock'
 				sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32 ${dockerrun}"
 			}			  
 	  }
