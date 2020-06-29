@@ -84,3 +84,6 @@ node
 	  }
 	
 }
+ /* how to check website is running in container ?
+ Type below URL in browser : 
+ http://<ip address>:15000/webapp/  */
