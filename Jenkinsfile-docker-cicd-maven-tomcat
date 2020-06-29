@@ -46,7 +46,7 @@ node
 	  {
 		
 			def sshCmd = 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32'
-			def RemoveContainer = 'Docker rm -rf my-tomcat-app'
+			def RemoveContainer = 'Docker rm -f my-tomcat-app'
 			sshagent(['deploy-to-devenv-docker'])
 			{
 				try{				
