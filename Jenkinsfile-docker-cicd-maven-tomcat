@@ -27,20 +27,20 @@ node
 	  stage ('Basically, It reads Dockerfile from your downloaded GIT repo and builds image.')
 	  {
 			
-				sh 'docker build -t gnande/myapp-javamvn:1.0.0 .'   /*  gnande/myapp-javamvn:1.0.0 = image name in local.  */
+				sh 'docker build -t gnande/myapp-javamvn:1.0.0 .'   /* gnande/myapp-javamvn:1.0.0 = image name in local */
 			
 	  }
 	  
 	  
 	  stage ('Login to DockerHub account and Push image.')
 	  {	    
-		
-			withCredentials([usernameColonPassword(credentialsId: 'dockerhubaccount', variable: 'dockerhubaccount')])
+					
+			withCredentials([usernamePassword(credentialsId: 'dockerhubaccount', passwordVariable: 'dockerhubpwd', usernameVariable: 'dockerhubuserid')]) 
 			{
-				sh "docker login -u gnande -p ${dockerhubaccount}" 
-			}	
-			sh 'docker push gnande/myapp-javamvn:1.0.0'
-		
+				sh "docker login -u gnande -p ${dockerhubpwd}"
+			}
+			
+			sh 'docker push gnande/myapp-javamvn:1.0.0'		
 	  }
 	  
 	  stage ('Remove old Container if exist with same name.')
