@@ -46,12 +46,14 @@ node
 	  {
 		
 			def sshCmd = 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32'
-			def RemoveContainer = 'Docker rm -f my-tomcat-app'
+			def StopContainer = 'docker stop my-tomcat-app'
+			def RemoveContainer = 'docker rm my-tomcat-app'
 			sshagent(['deploy-to-devenv-docker'])
 			{
 				try{				
-					sh "${sshCmd} ${RemoveContainer}"  /* here we are using double quotes "" because double quotes gives result of varable like ${sshCmd} */
-						
+					sh "${sshCmd}"   /* here we are using double quotes "" because double quotes gives result of varable like ${sshCmd} */
+					sh "${StopContainer}"	
+					sh "${RemoveContainer}"	
 					}catch(error){
 					
 					}				
