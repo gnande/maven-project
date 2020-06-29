@@ -52,8 +52,7 @@ node
 			sshagent(['deploy-to-devenv-docker'])
 			{
 				try{				
-					sh "${sshCmd}"   /* here we are using double quotes "" because double quotes gives result of varable like ${sshCmd} */
-					sh "${WaitContainer}"	
+					sh "${sshCmd} ${WaitContainer}" /* here we are using double quotes "" because double quotes gives result of varable like ${sshCmd} */
 					sh "${RemoveContainer}"	
 					}catch(error){
 					
