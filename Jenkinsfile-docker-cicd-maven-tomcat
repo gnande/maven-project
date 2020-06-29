@@ -27,7 +27,7 @@ node
 	  stage ('Basically, It reads Dockerfile from your downloaded GIT repo and builds image.')
 	  {
 			
-				sh 'docker build -t gnande/myapp-javamvn:1.0.0 .'   /* myapp-javamvn:1.0.0 = image name */
+				sh 'docker build -t gnande/myapp-javamvn:1.0.0 .'   /*  gnande/myapp-javamvn:1.0.0 = image name in local.  */
 			
 	  }
 	  
