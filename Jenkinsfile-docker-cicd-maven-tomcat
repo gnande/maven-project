@@ -47,12 +47,12 @@ node
 		
 			def sshCmd = 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.1.32'
 			def StopContainer = 'docker stop my-tomcat-app'
-			def WaitContainer = 'docker wait my-tomcat-app' // Block until one or more containers stop, then print their exit codes.
+			//def WaitContainer = 'docker wait my-tomcat-app' // Block until one or more containers stop, then print their exit codes.
 			def RemoveContainer = 'docker rm my-tomcat-app'
 			sshagent(['deploy-to-devenv-docker'])
 			{
 				try{				
-					sh "${sshCmd} ${StopContainer} ${WaitContainer} ${RemoveContainer}" /* here we are using double quotes "" because double quotes gives result of varable like ${sshCmd} */
+					sh "${sshCmd} ${StopContainer} ${RemoveContainer}" /* here we are using double quotes "" because double quotes gives result of varable like ${sshCmd} */
 					//sh "${RemoveContainer}"	
 					}catch(error){
 					
