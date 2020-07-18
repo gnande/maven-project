@@ -1,0 +1,51 @@
+pipeline
+{
+	/** This is CICD Release Pipleine only. Once your build piepline gets successful then execute this Release pipeline. /
+	agnet any
+	stages
+	{
+		
+		stage ('Connect to Kubernate cluster. This step should be done only in Jenkins -> Manage Jenkins ->  Configure System ')
+		{
+			steps
+			{
+				/*
+					1) Here, No need to mention server in "Jenkins -> Manage Jenkins ->  Configure System". 
+					2) Just create credentials for Kubernate as below: (because .kube/config file has cluster server mentioned in it.)
+						a) Install  plugins - kubernetes, kubernetes continuous deploy
+						b) Open K8s master console ot Manage k8s node and type command - cat .kube/config & Copy entire content of that file (from apiVersion to ==)
+						c) Add Kubernetes configuration credentials in Jenkins
+							Kind: Kuberntes Configuration
+							Id: KUBERNETES_CLUSTER_CONFIG
+							Kuberconfig: There are multiple option such as
+						(We can use Enter Directly option for k8s Jenkins CI&CD)
+						Add DOKCER_HUB_PASSWORD as secret text under Jenkins Credentials.
+					3) Done. Build and Deploy Docker Applications from Jenkins in Kubernetes Cluster using Pipeline script.					
+						   
+				*/
+			}
+		}
+		stage ('Add terraform or ARM template or Cloudformation: IAC - Database creation (ex1).')
+		{
+			steps
+			{
+				/* Will see later */
+			}
+		}
+		stage ('Replace token (connection string based on DB ex1) -->  (variables)')
+		{
+			steps
+			{
+				/* Will see later */
+			}
+		}		
+		stage ('Deploy image to Kubernate cluster.')
+		{
+			steps
+			{
+				// You will get k8s yml file from your GitHub repo.
+				sh 'kubectl apply -f k8s-deployment-myJavaTomcatApp-LoadBalancerService.yml'
+			}
+		}
+	}
+}
