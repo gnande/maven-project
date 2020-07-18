@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-java-tomcat-app
+  labels:
+    env: prod
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      website: myjavawebsite
+  template:
+    metadata:
+      labels:
+        website: myjavawebsite
+    spec:
+      containers:
+        - name: my-java-website-container
+          image: gnande/myapp-javamvn:2.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-myjavawebsite
+spec:
+  selector:
+    website: myjavawebsite
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080    
+  type: LoadBalancer
