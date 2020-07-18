@@ -1,0 +1,58 @@
+pipeline
+{
+	/** This is CICD Build Pipleine only. Best practice is that, Release Pipeline should be in another file. /
+	agnet any
+	stages
+	{
+		
+		stage ('Checkout github branch')
+		{
+			steps
+			{
+				git 'https://github.com/gnande/maven-project.git'
+			}
+		}
+		
+		stage ('Build the source code with Maven. Create WAR file with SonarQube Analysis.')
+		{
+			steps 
+			{
+				withSonarQubeEnv(credentialsId: 'mysonar') 
+				{
+					withMaven(jdk: 'localjdk', maven: 'localmaven') 
+					{
+						sh 'mvn clean package sonar:sonar'
+					}
+				}
+			}
+		}
+		
+		stage ('Create Docker image using build artifacts created by maven. Basically, It reads Dockerfile from your downloaded GIT repo and builds image.')
+		{
+			steps
+			{
+				sh 'docker build -t gnande/myapp-javamvn:2.0.0 .' 
+			}
+		}
+		
+		stage ('Security in CICD -> Docker Image Scanning with Aqua(Docker Native scanning tool) OR Qualys Container Security OR twistlock')
+		{
+			steps
+			{
+				sh 'aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html''
+			}
+		}	
+		
+		stage ('Push Docker image to DockerHub or ECR or ACR or Dcoker registry')
+		{
+			steps
+			{
+				withCredentials([usernameColonPassword(credentialsId: 'dockerhubaccount', variable: 'dockerhubaccount')])
+				{
+					sh 'docker login -u gnande -p ${dockerhubaccount}' 
+				}	
+					sh 'docker push gnande/myapp-javamvn:2.0.0'
+			}
+		}			
+	}
+}
