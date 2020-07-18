@@ -1,6 +1,6 @@
 pipeline
 {
-	/** This is CICD Build Pipleine only. Best practice is that, Release Pipeline should be in another file. /
+	/* This is CICD Build Pipleine only. Best practice is that, Release Pipeline should be in another file. */
 	agnet any
 	stages
 	{
