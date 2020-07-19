@@ -35,13 +35,13 @@ pipeline
 			}
 		}
 		
-		stage ('Security in CICD -> Docker Image Scanning with Aqua(Docker Native scanning tool) OR Qualys Container Security OR twistlock')
+		/*stage ('Security in CICD -> Docker Image Scanning with Aqua(Docker Native scanning tool) OR Qualys Container Security OR twistlock')
 		{
 			steps
 			{
 				aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
 			}
-		}	
+		}*/	
 		
 		stage ('Push Docker image to DockerHub or ECR or ACR or Dcoker registry')
 		{
