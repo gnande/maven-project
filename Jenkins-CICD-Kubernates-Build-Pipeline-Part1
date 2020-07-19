@@ -39,7 +39,7 @@ pipeline
 		{
 			steps
 			{
-				sh 'aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html''
+				aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
 			}
 		}	
 		
