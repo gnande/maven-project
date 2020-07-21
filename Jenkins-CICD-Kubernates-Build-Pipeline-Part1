@@ -40,8 +40,9 @@ pipeline
 		{
 			steps
 			{
-				//Make sure before executing this job, Got Manage Jenkins -> Configure System -> Aqua MicroScanner -> (give your password) Aqua MicroScanner token. 
-				aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: 'exit 1', onDisallowed: 'ignore', outputFormat: 'html'
+				//Make sure before executing this job, Got Manage Jenkins -> Configure System -> Aqua MicroScanner -> (give your own password) Aqua MicroScanner token. 
+				aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
+				//aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: 'exit 1', onDisallowed: 'ignore', outputFormat: 'html
 			}
 		}	
 		
