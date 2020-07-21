@@ -23,6 +23,7 @@ pipeline
 					3) Done. Build and Deploy Docker Applications from Jenkins in Kubernetes Cluster using Pipeline script.					
 						   
 				*/
+				sh 'echo "hello k8s"'
 			}
 		}
 		
@@ -30,7 +31,7 @@ pipeline
 		{
 			steps
 			{
-				
+				sh 'echo "hello k8s"'
 			}
 		}
 		
@@ -38,7 +39,7 @@ pipeline
 		{
 			steps
 			{
-				
+				sh 'echo "hello k8s"'
 			}
 		}
 		
