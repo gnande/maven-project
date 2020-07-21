@@ -30,17 +30,18 @@ pipeline
 		{
 			steps
 			{
-				/* Will see later */
+				// Will see later 
 			}
 		}
 		
-		stage ('Replace token (connection string based on DB ex1) -->  (variables)')
+		stage ('Replace token (connection string based on DB ex1) -->  (variables)' )
 		{
 			steps
 			{
-				/* Will see later */
+				// Will see later 
 			}
-		}		
+		}
+		
 		stage ('Deploy image to Kubernate cluster.')
 		{
 			steps
