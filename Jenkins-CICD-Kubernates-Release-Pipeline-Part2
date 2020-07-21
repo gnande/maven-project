@@ -1,7 +1,7 @@
 pipeline
 {
 	/* This is CICD Release Pipleine only. Once your build piepline gets successful then execute this Release pipeline. */
-	agnet any
+	agent any
 	stages
 	{
 		
