@@ -17,13 +17,13 @@ pipeline
 		{
 			steps 
 			{
-				//withSonarQubeEnv(credentialsId: 'mysonar') 
-				//{
+				withSonarQubeEnv(credentialsId: 'mysonar') 
+				{
 					withMaven(jdk: 'localjdk', maven: 'localmaven') 
 					{
-						sh 'mvn clean package'
+						sh 'mvn clean package sonar:sonar'
 					}
-				//}
+				}
 			}
 		}
 		
@@ -35,21 +35,22 @@ pipeline
 			}
 		}
 		
-		/*stage ('Security in CICD -> Docker Image Scanning with Aqua(Docker Native scanning tool) OR Qualys Container Security OR twistlock')
+		stage ('Security in CICD -> Docker Image Scanning with Aqua(Docker Native scanning tool) OR Qualys Container Security OR twistlock')
 		{
 			steps
 			{
 				aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
 			}
-		}*/	
+		}	
 		
 		stage ('Push Docker image to DockerHub or ECR or ACR or Dcoker registry')
 		{
 			steps
 			{
-				withCredentials([usernameColonPassword(credentialsId: 'dockerhubaccount', variable: 'dockerhubaccount')])
+				//withCredentials([usernameColonPassword(credentialsId: 'dockerhubaccount', variable: 'dockerhubaccount')])
+				withCredentials([usernamePassword(credentialsId: 'dockerhubaccount', passwordVariable: 'dockerhubpwd', usernameVariable: 'dockerhubuid')])				
 				{
-					sh 'docker login -u gnande -p ${dockerhubaccount}' 
+					sh 'docker login -u gnande -p ${dockerhubpwd}' 
 				}	
 					sh 'docker push gnande/myapp-javamvn:2.0.0'
 			}
