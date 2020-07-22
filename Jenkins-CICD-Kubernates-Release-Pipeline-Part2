@@ -49,8 +49,14 @@ pipeline
 			{
 				// You will get k8s yml file from your GitHub repo. 
 				// type command on your jenkins ec2 and check kubectl path. > which kubectl 
-				sh '/usr/local/bin/kubectl apply -f k8s-deployment-myJavaTomcatApp-LoadBalancerService.yml'
+				//sh '/usr/local/bin/kubectl apply -f k8s-deployment-myJavaTomcatApp-LoadBalancerService.yml'
+				
+				
+				kubernetesDeploy configs: 'k8s-deployment-myJavaTomcatApp-LoadBalancerService.yml', kubeConfig: [path: ''], kubeconfigId: 'KUBERNETES_CLUSTER_CONFIG', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+				
+				
 			}
 		}
+		
 	}
 }
