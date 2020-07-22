@@ -40,6 +40,51 @@ pipeline
 		{
 			steps
 			{
+				/*
+				
+				// https://github.com/aquasecurity/microscanner
+				// To use MicroScanner you'll first need to register for a token.
+				// $ docker run --rm -it aquasec/microscanner --register <email address>
+				//                        OR
+				// get a token by registering here https://microscanner.aquasec.com/signup
+				// They will send you a token to the email address you specify.
+				// Pass the token obtained on registration in at build time. example as below:
+				// $ docker build --build-arg=token=<TOKEN> --no-cache .
+				// The output includes JSON output describing any vulnerabilities found in your image.
+				// Specifying the --continue-on-failure flag allows you to continue the build even if high severity issues are found.
+				// Specifying the --no-verify flag allows you to continue the build even if CA certificates are not installed.
+				// Specifying the --html flag provides output in HTML format.
+				
+				//Best practices:
+				//Since the token is a secret value, it's a good idea to pass this in as a build argument rather than hard-coding it into your Dockerfile.
+				//The step that runs microscanner needs to appear in your Dockerfile after you have added or built files and directories for the container image. Build steps happen in the order they are defined in the Dockerfile, so anything that gets added to the image after microscanner is run won't be scanned for vulnerabilities.
+				//The --no-cache option ensures that microscanner is run every time, which is necessary even if your image contents haven't changed in case new vulnerabilities have been discovered. Of course this forces all the steps in the Dockerfile to be re-run, which could slow down your build. To allow for earlier stages to be cached but still ensure that microscanner is run every time you might want to consider a cache-busting technique such as the one described here.
+				
+				//Fair use policy: Your token will be rate-limited to a reasonable number of scans. If you hit rate-limiting issues please do get in touch to discuss your use-case.
+				
+				// Adding microscanner to your Dockerfile as below. The following lines add microscanner to a Dockerfile, and execute it.
+				
+				// ADD https://get.aquasec.com/microscanner /
+				// RUN chmod +x /microscanner
+				// RUN /microscanner <TOKEN> [--continue-on-failure
+				
+				// Add ca-certificates if needed
+				// You may also need to add ca-certificates to the image if they are not already built into the parent image, or added in your Dockerfile, so that microscanner can make an HTTPS connection. For example (Debian):
+				// Example of Dockerfile :
+				
+				// FROM debian:jessie-slim
+				// RUN apt-get update && apt-get -y install ca-certificates
+				// ADD https://get.aquasec.com/microscanner /
+				// RUN chmod +x /microscanner
+				// ARG token
+				// RUN /microscanner ${token}
+				// RUN echo "No vulnerabilities!"				
+
+				// Pass the token obtained on registration in at build time.
+				// $ docker build --build-arg=token=<TOKEN> --no-cache .
+				
+				*/
+			
 				//Make sure before executing this job, Go to Manage Jenkins -> Configure System -> Aqua MicroScanner -> (give your own password) Aqua MicroScanner token. 
 				aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
 				//aquaMicroscanner imageName: 'gnande/myapp-javamvn:2.0.0', notCompliesCmd: 'exit 1', onDisallowed: 'ignore', outputFormat: 'html
