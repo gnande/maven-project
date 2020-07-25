@@ -22,7 +22,7 @@ pipeline
 					withMaven(jdk: 'localjdk', maven: 'localmaven') 
 					{
 						//sh 'mvn clean package sonar:sonar'
-						sh 'mvn clean package'
+						sh 'mvn clean install'
 					}
 				//}
 			}
